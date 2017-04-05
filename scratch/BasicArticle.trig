@@ -1,0 +1,90 @@
+@prefix this: <http://purl.org/np/RAWQn1pqRX7xHMmKj5mcmcUUEz2F6HbJgO-BG2e0zs3Qg> .
+@prefix sub: <http://purl.org/np/RAWQn1pqRX7xHMmKj5mcmcUUEz2F6HbJgO-BG2e0zs3Qg#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix d2d: <http://rdfns.org/d2d/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+sub:Head {
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
+}
+
+sub:assertion {
+	sub:BasicArticle d2d:hasFieldSpec sub:_1 ;
+		a d2d:ArticleDefinition ;
+		rdfs:label "D2D Article Defintion for a Basic Article with 5 fields of which 1 for nested articles." .
+	
+	sub:_1 rdf:first sub:_2 ;
+		rdf:rest sub:_3 .
+	
+	sub:_10 d2d:hasFieldType d2d:H5 ;
+		d2d:isOptional "1" ;
+		d2d:mustSatisfy sub:subheader ;
+		a d2d:FieldSpecification .
+	
+	sub:_11 rdf:first sub:_12 ;
+		rdf:rest sub:_13 .
+	
+	sub:_12 d2d:hasFieldType d2d:Div ;
+		d2d:mustSatisfy sub:content ;
+		a d2d:FieldSpecification .
+	
+	sub:_13 rdf:first sub:_14 ;
+		rdf:rest sub:_7 .
+	
+	sub:_14 d2d:hasFieldType d2d:Article ;
+		d2d:isOptional "1" ;
+		d2d:mustSatisfy sub:_4 ;
+		a d2d:FieldSpecification .
+	
+	sub:_2 d2d:hasFieldType d2d:H4 ;
+		d2d:mustSatisfy sub:_9 ;
+		a d2d:FieldSpecification .
+	
+	sub:_3 rdf:first sub:_10 ;
+		rdf:rest sub:_11 .
+	
+	sub:_4 d2d:hasPredicate sub:nested ;
+		d2d:mustSatisfy sub:_5 , sub:_6 ;
+		a d2d:TripleSpecification .
+	
+	sub:_5 d2d:hasPredicate d2d:places ;
+		d2d:hasRole d2d:Content ;
+		a d2d:TripleSpecification .
+	
+	sub:_6 d2d:hasPredicate d2d:prefRenderDef ;
+		d2d:hasRole d2d:PrefRenderDef ;
+		d2d:isOptional "1" ;
+		a d2d:TripleSpecification .
+	
+	sub:_7 rdf:first sub:_8 ;
+		rdf:rest rdf:nil .
+	
+	sub:_8 d2d:hasFieldType d2d:I ;
+		d2d:isOptional "1" ;
+		d2d:mustSatisfy sub:footer ;
+		a d2d:FieldSpecification .
+	
+	sub:_9 d2d:hasAlternative sub:mainTitle ;
+		d2d:hasObjectType <xsd:string> ;
+		d2d:hasPredicate sub:header ;
+		d2d:hasRole d2d:Content ;
+		a d2d:TripleSpecification .
+}
+
+sub:provenance {
+	sub:assertion prov:hadPrimarySource <http://example.d2dsite.net/d2d/ad/BasicArticle.rdf> .
+}
+
+sub:pubinfo {
+	this: dc:created "2017-04-05T09:34:26+01:00"^^xsd:dateTime ;
+		pav:createdBy <http://orcid.org/0000-0002-1267-0234> ;
+		d2d:containsDefinition sub:BasicArticle .
+}
